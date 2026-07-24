@@ -117,7 +117,7 @@
     <div class="ex"><b>+</b> Met steps (Gossip Girl) · Marc Jacobs · Alo</div></div>
 
   <div class="day"><div class="dh"><span class="dd">Dom 16</span><span class="zb b2">Brooklyn</span><span class="muted">🚌 Bus g.2</span></div>
-    <div class="sk"><span class="lock">🔒</span> 🌅 Ponte di Brooklyn (alba) · Dumbo · Manhattan Bridge · ❄️ SoHo/Tribeca · 🌃 cena + passeggiata <small class="muted">(niente più Empire di sera)</small></div>
+    <div class="sk"><span class="lock">🔒</span> ☀️ Ponte di Brooklyn <b>di giorno (col Big Bus)</b> · Dumbo · Manhattan Bridge · ❄️ SoHo/Tribeca · 🌃 cena + passeggiata <small class="muted">(niente più Empire di sera)</small></div>
     <div class="ex"><b>+</b> Ghostbusters HQ · molo (foto) · shopping SoHo</div></div>
 
   <div class="day"><div class="dh"><span class="dd">Lun 17</span><span class="zb b1">FiDi</span><span class="zb b4">West Side</span></div>
@@ -128,21 +128,12 @@
     <div class="sk"><span class="lock">🔒</span> 🏙️ <mark>EMPIRE di giorno (mattina)</mark> · 🌀 Vessel + Hudson Yards · ultimi acquisti · repack → aeroporto</div>
     <div class="ex"><b>+</b> All'Antico Vinaio · Junior's</div></div>
 
-  <!-- ROUND 2: latest inputs processed + open question -->
+  <!-- ROUND 3: latest inputs processed -->
   <h2>🔁 I tuoi ultimi ritocchi, sistemati</h2>
   <div class="card">
-    <p style="margin:.3em 0"><b>🎤 Stardust:</b> aggiunto — <b>Ellen's Stardust Diner</b> (Times Sq, vicino hotel).</p>
-    <p style="margin:.3em 0"><b>🌉 Ponte di Brooklyn all'alba:</b> ci si arriva in <b>metro</b> (sunrise ad agosto ~6:10, il Big Bus non c'è ancora). Da Times Sq: <b>F → York St</b> o <b>A/C → High St</b> per le foto a Dumbo; <b>4/5/6 → Brooklyn Bridge-City Hall</b> per attraversare il ponte.</p>
-    <p style="margin:.3em 0"><b>🚌 Big Bus, orari:</b> Downtown ~<b>9:00-17:00</b>, Uptown ~<b>10:00-16:00</b>. Quindi: alba in metro, poi <b>dalle ~9:00 si usa il bus</b> per le tratte lunghe.</p>
-  </div>
-
-  <!-- OPEN QUESTION: Stardust nature -->
-  <div class="fb">
-    <div class="q">🤔 Un dubbio sullo Stardust: <b>Ellen's Stardust è una cena-spettacolo</b> (camerieri che cantano Broadway, ~45-90 min), <b>non un caffè veloce</b>. Come lo vuoi?</div>
-    <div class="chips" data-group="stardust">
-      <div class="chip" data-val="tienilo come cena/esperienza">🎤 Tienilo come cena/esperienza</div>
-      <div class="chip" data-val="preferisco un vero caffè/pausa veloce">☕ Meglio un vero caffè/pausa</div>
-    </div>
+    <p style="margin:.3em 0"><b>🎤 Stardust:</b> confermato come <b>cena/esperienza</b> → cena di benvenuto giovedì. 👍</p>
+    <p style="margin:.3em 0"><b>🌉 Alba sul ponte: tolta.</b> Il <b>Ponte di Brooklyn si fa di giorno</b> — e sì, <b>ci si arriva col Big Bus</b> (linea Downtown/rossa, fermata Brooklyn Bridge lato Manhattan) → si cammina sul ponte. Per <b>Dumbo</b> (lato Brooklyn): taxi/Uber breve o la linea Purple del Big Bus.<br><small class="muted">⚠️ Di giorno ad agosto il ponte è più caldo e affollato → meglio appena parte il bus (~9:00). La foto all'alba di Cocò si può recuperare al tramonto un'altra sera.</small></p>
+    <p style="margin:.3em 0"><b>🚕 Metro limitata:</b> ok — di base <b>a piedi + Big Bus + taxi/Uber</b>. <small class="muted">(Siamo in 8 → 2 auto a tratta: lo tengo in conto nel budget.)</small></p>
   </div>
 
   <!-- BUS OPTIMISATION NOTE -->
@@ -197,7 +188,7 @@
 </div>
 
 <script>
-  const state = { tweak:'', ok:'', stardust:'' };
+  const state = { tweak:'', ok:'' };
   document.querySelectorAll('[data-group]').forEach(group=>{
     const key = group.getAttribute('data-group');
     if(!(key in state)) return;
@@ -218,7 +209,6 @@
     L.push('[pagina: v5-fabrizio-ok]');
     L.push('');
     L.push('🟢 Approvazione: ' + (state.ok || '—'));
-    L.push('🎤 Stardust: ' + (state.stardust || '—'));
     if(state.tweak || val('tweakTxt')) L.push('✏️ Ritocco finale: ' + (state.tweak||'') + (val('tweakTxt') ? ' — '+val('tweakTxt') : ''));
     const open = val('openText');
     if(open){ L.push(''); L.push('💬 Altro: ' + open); }
