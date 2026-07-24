@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New York — Il tuo itinerario su misura</title>
+<style>
+  :root{
+    --bg:#fbf7f0; --card:#fff; --ink:#22303c; --muted:#6b7a88; --line:#e7ddcd;
+    --accent:#1f3b73; --accent2:#e0912f; --g5:#3f9d5a; --red:#d1495b;
+    --g1:#0f8a8a; --g2:#5b6cc9; --g3:#e0912f; --g4:#c9557d;
+    --shadow:0 6px 22px rgba(30,40,60,.10); --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; background:var(--bg); color:var(--ink); padding-bottom:98px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px}
+  h1,h2,h3{line-height:1.2; margin:.2em 0}
+  h2{font-size:1.4rem; margin-top:1.6em}
+  h3{font-size:1.02rem}
+  p{margin:.5em 0}
+  small{color:var(--muted)}
+  .muted{color:var(--muted)}
+
+  .hero{background:linear-gradient(160deg,#1f3b73 0%,#14284f 100%); color:#fff; padding:34px 0 26px; text-align:center}
+  .hero .flag{font-size:2.3rem}
+  .hero h1{font-size:1.55rem; margin:.15em 0}
+  .hero .sub{opacity:.95; font-size:.96rem}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:15px 17px; margin:13px 0}
+  .intro{margin-top:-18px; position:relative}
+
+  .zb{display:inline-block; color:#fff; font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:999px}
+  .b1{background:var(--g1)} .b2{background:var(--g2)} .b3{background:var(--g3)} .b4{background:var(--g4)} .b5{background:var(--g5)}
+
+  /* roadmap */
+  .road{position:relative; margin:2px 0 0; padding-left:34px}
+  .road::before{content:""; position:absolute; left:11px; top:8px; bottom:12px; width:3px; background:var(--line); border-radius:2px}
+  .step{position:relative; padding:5px 0 11px}
+  .step:last-child{padding-bottom:2px}
+  .step .dot{position:absolute; left:-34px; top:0; width:25px; height:25px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:.8rem; background:#fff; border:3px solid var(--line); z-index:1}
+  .step.done .dot{background:var(--g5); border-color:var(--g5); color:#fff}
+  .step.now .dot{background:var(--accent2); border-color:var(--accent2); color:#fff; box-shadow:0 0 0 5px rgba(224,145,47,.18)}
+  .step .st{font-weight:800; font-size:.92rem}
+  .step.future .st{color:var(--muted)}
+  .step .ss{font-size:.8rem; color:var(--muted)}
+  .here{display:inline-block; background:var(--accent2); color:#fff; font-size:.64rem; font-weight:800;
+    padding:2px 7px; border-radius:999px; margin-left:7px; vertical-align:middle}
+
+  /* coverage */
+  .cov{display:flex; gap:9px; align-items:flex-start; padding:7px 0; border-bottom:1px dashed var(--line); font-size:.9rem}
+  .cov:last-child{border-bottom:none}
+  .cov .ic{font-size:1.15rem; line-height:1.3}
+  .cov b{color:var(--ink)}
+  .cov .ok{color:var(--g5); font-weight:700}
+  .cov .warn{color:var(--red); font-weight:700}
+
+  /* day cards */
+  .day{border:1px solid var(--line); border-radius:13px; padding:12px 13px; margin:11px 0; background:#fff}
+  .day .dh{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px}
+  .day .dd{font-weight:800; font-size:.96rem}
+  .sk{font-size:.87rem; margin:3px 0 7px}
+  .sk .lock{color:var(--muted); font-size:.76rem; font-weight:700}
+  .exlabel{font-size:.76rem; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-top:6px}
+  .extras{display:flex; flex-wrap:wrap; gap:7px; margin-top:5px}
+  .rm{border:1.5px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; font-size:.85rem; cursor:pointer; user-select:none; transition:all .15s}
+  .rm:hover{border-color:var(--red)}
+  .rm.off{background:#fbe9ec; border-color:var(--red); color:#b23a5b; text-decoration:line-through; opacity:.8}
+  .rm.off::before{content:"\2715  "; text-decoration:none; display:inline-block}
+
+  /* generic feedback blocks */
+  .fb{background:linear-gradient(135deg,#fff,#fbf4e8); border:1px dashed var(--accent2); border-radius:14px; padding:14px 16px; margin:12px 0}
+  .fb.blue{background:linear-gradient(135deg,#eef4fb,#fff); border-color:var(--accent)}
+  .fb.green{background:linear-gradient(135deg,#f0f9f2,#fff); border-color:var(--g5)}
+  .fb .q{font-weight:700; margin-bottom:8px}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{border:1.5px solid var(--line); background:#fff; color:var(--ink); padding:8px 13px; border-radius:999px; font-size:.88rem; cursor:pointer; transition:all .15s; user-select:none}
+  .chip:hover{border-color:var(--accent2)}
+  .chip.sel{background:var(--accent2); border-color:var(--accent2); color:#fff}
+  .txtin, textarea{width:100%; border:1.5px solid var(--line); border-radius:12px; padding:11px; font-family:inherit; font-size:.94rem; background:#fff; color:var(--ink)}
+  textarea{resize:vertical; min-height:64px; margin-top:9px}
+  .txtin{margin-top:10px}
+
+  .regen{background:linear-gradient(135deg,#fff5ec,#fff); border:2px dashed var(--red); border-radius:14px; padding:15px 16px; margin:14px 0}
+  .regen h3{margin-top:0; color:#b23a5b}
+
+  .bar{position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line);
+    box-shadow:0 -6px 20px rgba(30,40,60,.10); padding:10px 14px; z-index:50}
+  .bar .in{max-width:660px; margin:0 auto; display:flex; align-items:center; gap:12px}
+  .bar .status{flex:1; font-size:.84rem}
+  .send{background:#25D366; color:#fff; border:none; border-radius:12px; padding:12px 16px; font-weight:800; font-size:.95rem; cursor:pointer; white-space:nowrap}
+  .send:active{transform:translateY(1px)}
+  .footer{text-align:center; padding:22px 0 6px; font-size:.82rem; color:var(--muted)}
+  .footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="flag">🗽✨</div>
+    <h1>Il tuo itinerario su misura</h1>
+    <div class="sub">Ecco il giro con dentro i desideri di tutti, <b>Fabrizio</b>. Guardalo con calma: <b>puoi togliere tappe, cambiare lo scheletro, dividere il gruppo o chiedere un giro diverso</b>.</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="card intro">
+    <h3>🧭 Come funziona questa pagina</h3>
+    <p style="margin:2px 0 0">Sotto ogni giorno: la riga 🔒 è lo <b>scheletro</b> (fisso). Le <b>tappe extra</b> le puoi <b>togliere con un tocco</b> e dirmi perché — così rigenero. C'è anche spazio per <b>cambiare lo scheletro</b>, per <b>dividervi in gruppi</b> e, se non ti convince, per <b>chiedere una proposta tutta nuova</b>. Ogni versione resta salvata.</p>
+  </div>
+
+  <!-- ROADMAP -->
+  <h2>🗺️ Dove siamo</h2>
+  <div class="card">
+    <div class="road">
+      <div class="step done"><div class="dot">✓</div><div class="st">Setup &amp; voli</div></div>
+      <div class="step done"><div class="dot">✓</div><div class="st">Questionario (8/8)</div></div>
+      <div class="step done"><div class="dot">✓</div><div class="st">Biglietti presi</div></div>
+      <div class="step done"><div class="dot">✓</div><div class="st">Le tue scelte + scheletro approvato</div></div>
+      <div class="step done"><div class="dot">✓</div><div class="st">Itinerario su misura scritto</div></div>
+      <div class="step now"><div class="dot">📍</div><div class="st">La tua revisione<span class="here">ORA</span></div><div class="ss">togli · cambia scheletro · dividi · rigenera</div></div>
+      <div class="step future"><div class="dot">🏁</div><div class="st">Itinerario finale</div><div class="ss">+ guida a persona + budget</div></div>
+    </div>
+  </div>
+
+  <!-- COVERAGE -->
+  <h2>🎯 Come risponde al questionario</h2>
+  <p class="muted" style="margin-top:0">A colpo d'occhio: cosa aveva chiesto il gruppo e dove l'ho messo.</p>
+  <div class="card">
+    <div class="cov"><span class="ic">🏙️</span><div><b>Skyline dall'alto</b> — chiesto da <b>tutti (8/8)</b> → Summit al tramonto + Empire di notte <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🌉</span><div><b>Ponte di Brooklyn</b> — 5 persone → domenica <b>all'alba</b> (foto + niente caldo) <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🛍️</span><div><b>Shopping</b> — 5 → 5th Ave (Lego, NBA, Sephora) · SoHo (Marc Jacobs, Alo) · UES <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🎬</span><div><b>Luoghi di film/serie</b> → Gossip Girl (UES) · Sex and the City · Ghostbusters HQ · Sanctum Sanctorum <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🍔</span><div><b>Cibo</b> → Joe's Pizza · Katz's pastrami · smash burger · Raising Cane's · Eataly <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🔥</span><div><b>Caldo</b> (vincolo n.1) → outdoor mattina, AC a mezzogiorno, sere in giro + soste gelato <span class="ok">✓</span></div></div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:9px 0">
+    <div class="cov"><span class="ic">👨</span><div>Fabrizio → skyline notturno · Ghostbusters · foto Oculus <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">👩</span><div>MariaPaola → Ponte di Brooklyn · Gossip Girl · fuori dai soliti giri <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🧔</span><div>Tony → pastrami (Katz's) · Bryant Park · foto al molo <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">👧</span><div>Cocò → 5th Ave + Ground Zero · Gossip Girl · Sephora/Alo <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">👩‍🦰</span><div>Barbara → arte (MoMA) · Sex and the City · sneakers <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">👦</span><div>Peppe → Ponte di Brooklyn · Summit · NBA Store · Nike/Lego <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">🧑</span><div>Giulio → Times Square · Sanctum Sanctorum · Joe's Pizza · fumetti <span class="ok">✓</span></div></div>
+    <div class="cov"><span class="ic">👧🏻</span><div>Carol → il suo sogno era <b>Madame Tussauds</b>, che avevamo tolto. Per ora: Summit (suo spot foto), shopping, posti instagrammabili <span class="warn">⚠︎ le manca una cosa "sua"</span></div></div>
+  </div>
+
+  <!-- ITINERARY, day by day, with removable extras -->
+  <h2>📅 L'itinerario, giorno per giorno</h2>
+  <p class="muted" style="margin-top:0">🔒 = scheletro (fisso). Le <b>tappe extra</b> le puoi <b>togliere o sostituire con un click</b>: toccale per toglierle (diventano barrate), poi qui sotto aggiungi <b>cosa mettere al posto</b> o cosa vuoi in più. <b>Ti rigenero un nuovo itinerario.</b></p>
+
+  <div class="day"><div class="dh"><span class="dd">Gio 13</span><span class="zb b3">Midtown</span><span class="muted">arrivo</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> Times Square di notte + cena</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">🍕 Joe's Pizza</span><span class="rm">🧩 Midtown Comics</span><span class="rm">🍦 gelato</span></div></div>
+
+  <div class="day"><div class="dh"><span class="dd">Ven 14</span><span class="zb b3">Midtown</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> Grand Central · Bryant Park · Rockefeller · 5th Ave · ❄️ MoMA · 🌃 Summit 19:00</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">🧱 Lego Store</span><span class="rm">🏀 NBA Store</span><span class="rm">👟 NikeTown</span><span class="rm">💄 Sephora</span><span class="rm">🧸 FAO Schwarz</span><span class="rm">🍗 Raising Cane's</span></div></div>
+
+  <div class="day"><div class="dh"><span class="dd">Sab 15</span><span class="zb b5">Uptown</span><span class="muted">🚌 Bus g.1</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> 🚲 Bici Central Park · ❄️ shopping/AC (Bloomingdale's) · Upper East Side</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">🎬 Met steps (Gossip Girl)</span><span class="rm">👜 Marc Jacobs</span><span class="rm">🧘 Alo</span></div></div>
+
+  <div class="day"><div class="dh"><span class="dd">Dom 16</span><span class="zb b2">Brooklyn</span><span class="muted">🚌 Bus g.2</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> 🌅 Ponte di Brooklyn (alba) · Dumbo · Manhattan Bridge · ❄️ SoHo/Tribeca · 🌃 Empire di notte</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">👻 Ghostbusters HQ</span><span class="rm">📸 molo (foto Tony)</span><span class="rm">👜 shopping SoHo</span></div></div>
+
+  <div class="day"><div class="dh"><span class="dd">Lun 17</span><span class="zb b1">FiDi</span><span class="zb b4">West Side</span><span class="muted">giornata piena</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> 🌅 Traghetto Statua + Wall St · ❄️ 9/11 + Oculus · 🥟 Chinatown/Little Italy · 🌇 Chelsea Market → High Line → Little Island (tramonto)</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">🥪 Katz's pastrami</span><span class="rm">🪄 Sanctum Sanctorum</span><span class="rm">👠 Sex and the City</span><span class="rm">🍝 Eataly</span></div></div>
+
+  <div class="day"><div class="dh"><span class="dd">Mar 18</span><span class="zb b4">West Side</span><span class="zb b3">Midtown</span><span class="muted">partenza</span></div>
+    <div class="sk"><span class="lock">🔒 scheletro:</span> 🌀 Vessel + Hudson Yards · ultimi acquisti 5th Ave · repack → aeroporto</div>
+    <div class="exlabel">extra (tocca per togliere)</div>
+    <div class="extras"><span class="rm">🥖 All'Antico Vinaio</span><span class="rm">🍰 Junior's</span></div></div>
+
+  <div class="card">
+    <div class="q" style="font-weight:700">✏️ Togli e/o sostituisci</div>
+    <p class="muted" style="margin:2px 0 0">Le tappe barrate le levo. Dimmi <b>perché</b> (troppa roba, non interessa, poco tempo...) e, se vuoi, <b>cosa metto al posto</b> o cosa aggiungo. Con questo <b>rigenero un nuovo itinerario</b>.</p>
+    <input class="txtin" id="rmWhy" placeholder="Perché le togli? (motivo)">
+    <input class="txtin" id="addWhat" placeholder="Cosa metto al posto / cosa aggiungo?">
+  </div>
+
+  <!-- SKELETON CHANGE -->
+  <h2>🧱 Vuoi cambiare lo scheletro?</h2>
+  <div class="fb blue">
+    <div class="q">Lo scheletro (ordine dei giorni, zone, ritmo, tappe fisse) è modificabile. Se vuoi toccarlo, dimmi cosa — faccio ripartire una revisione dello scheletro.</div>
+    <div class="chips" data-group="skmod">
+      <div class="chip" data-val="cambiare l'ordine dei giorni">Ordine dei giorni</div>
+      <div class="chip" data-val="cambiare la zona di un giorno">Zona di un giorno</div>
+      <div class="chip" data-val="cambiare il ritmo (orari)">Il ritmo/orari</div>
+      <div class="chip" data-val="spostare una tappa fissa">Spostare una tappa fissa</div>
+    </div>
+    <input class="txtin" id="skTxt" placeholder="Cosa cambieresti nello scheletro? (es. 'domenica e lunedì invertiti')">
+  </div>
+
+  <!-- GROUP SPLIT / FORK -->
+  <h2>👥 Ci si può dividere in gruppi?</h2>
+  <div class="fb green">
+    <div class="q">Alcune cose piacciono solo ad alcuni (es. Marvel per i ragazzi, shopping donne, arte). In quei momenti <b>il gruppo si può dividere</b> e poi ci si ricongiunge? Così creo dei "rami" paralleli.</div>
+    <div class="chips" data-group="split">
+      <div class="chip" data-val="Sì, ci si può dividere">👍 Sì, si può dividere</div>
+      <div class="chip" data-val="Solo per alcune attività">🔀 Solo per alcune cose</div>
+      <div class="chip" data-val="No, sempre tutti insieme">🤝 No, sempre insieme</div>
+    </div>
+    <input class="txtin" id="splitTxt" placeholder="Quali attività / chi con chi? (es. 'ragazzi Marvel, adulte shopping')">
+  </div>
+
+  <!-- NATHAN'S -->
+  <h2>🌭 Nathan's — la tua scelta</h2>
+  <div class="fb">
+    <div class="q">Il Nathan's originale è a <b>Coney Island</b> (~1h a tratta). Come lo facciamo?</div>
+    <div class="chips" data-group="nathans">
+      <div class="chip" data-val="A - outlet vicino Times Square (veloce)">🅰️ Outlet vicino hotel (veloce)</div>
+      <div class="chip" data-val="B - Coney Island mezza giornata">🅱️ Coney Island (mezza giornata)</div>
+    </div>
+    <p class="muted" style="margin:8px 0 0; font-size:.84rem">🅱️ = anche boardwalk, spiaggia, Luna Park. Bonus: <i>I guerrieri della notte</i> di Tony finisce lì.</p>
+  </div>
+
+  <!-- CAROL EXTRA -->
+  <h2>👧🏻 Un extra per Carol</h2>
+  <div class="fb">
+    <div class="q">Carol è l'unica rimasta senza il "suo" sogno (Tussauds tolto). Vuoi darle qualcosa di suo?</div>
+    <div class="chips" data-group="carol">
+      <div class="chip" data-val="negozio di musica">🎵 Negozio di musica</div>
+      <div class="chip" data-val="stage TSX Times Square">🎤 Stage TSX Times Sq</div>
+      <div class="chip" data-val="un dolce a sua scelta">🍰 Dolce a sua scelta</div>
+      <div class="chip" data-val="va bene così">Va bene così</div>
+    </div>
+    <input class="txtin" id="carolTxt" placeholder="Altra idea per Carol...">
+  </div>
+
+  <!-- REGENERATE -->
+  <div class="regen">
+    <h3>🔄 Non ti convince? Chiedi un giro diverso</h3>
+    <p style="margin:.3em 0">Ogni versione è salvata, quindi posso generarti una <b>proposta completamente nuova</b> senza perdere questa. Se vuoi, dimmi in che direzione.</p>
+    <div class="chips" data-group="regen">
+      <div class="chip" data-val="Sì, voglio una proposta nuova">🔄 Sì, rigenera</div>
+      <div class="chip" data-val="No, questa va bene (con le modifiche)">👍 No, questa va bene</div>
+    </div>
+    <input class="txtin" id="regenTxt" placeholder="Che direzione? (es. 'più relax', 'più musei', 'più Brooklyn')">
+  </div>
+
+  <!-- FREE -->
+  <h2>💬 Altro da dirmi?</h2>
+  <div class="card">
+    <textarea id="openText" placeholder="Spazio libero: qualsiasi idea, dubbio o richiesta..."></textarea>
+  </div>
+
+  <div class="footer">
+    Versione pagina: <b>v4-review</b> ·
+    <a href="versions/v3-vessel/" target="_blank">pagina precedente</a><br>
+    Il feedback arriva su WhatsApp 💚
+  </div>
+</div>
+
+<div class="bar">
+  <div class="in">
+    <div class="status" id="statusLine">Guarda, togli, scegli — poi invia</div>
+    <button class="send" id="sendBtn">📲 Invia su WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  // removable extras
+  const removed = new Set();
+  document.querySelectorAll('.rm').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      el.classList.toggle('off');
+      const t = el.textContent.trim();
+      if(el.classList.contains('off')) removed.add(t); else removed.delete(t);
+      const n = removed.size;
+      document.getElementById('statusLine').textContent = n ? (n+' tappe da togliere') : 'Guarda, togli, scegli - poi invia';
+    });
+  });
+
+  // single-select chip groups
+  const state = { skmod:'', split:'', nathans:'', carol:'', regen:'' };
+  document.querySelectorAll('[data-group]').forEach(group=>{
+    const key = group.getAttribute('data-group');
+    if(!(key in state)) return;
+    group.querySelectorAll('.chip').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const already = el.classList.contains('sel');
+        group.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));
+        state[key] = already ? '' : el.getAttribute('data-val');
+        if(!already) el.classList.add('sel');
+      });
+    });
+  });
+
+  function val(id){ const el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  function buildMessage(){
+    const L = [];
+    L.push('🗽 NEW YORK — Revisione itinerario v2 (Fabrizio)');
+    L.push('[pagina: v4-review]');
+    L.push('');
+    if(removed.size || val('rmWhy') || val('addWhat')){
+      if(removed.size) L.push('🗑️ Tappe da togliere: ' + [...removed].join(', '));
+      if(val('rmWhy')) L.push('   Motivo: ' + val('rmWhy'));
+      if(val('addWhat')) L.push('➕ Da mettere al posto / aggiungere: ' + val('addWhat'));
+      L.push('');
+    }
+    L.push('🧱 Scheletro: ' + (state.skmod || '—') + (val('skTxt') ? ' — '+val('skTxt') : ''));
+    L.push('');
+    L.push('👥 Dividersi in gruppi: ' + (state.split || '—') + (val('splitTxt') ? ' — '+val('splitTxt') : ''));
+    L.push('');
+    L.push('🌭 Nathan\'s: ' + (state.nathans || '—'));
+    L.push('');
+    L.push('👧🏻 Extra per Carol: ' + (state.carol || '—') + (val('carolTxt') ? ' — '+val('carolTxt') : ''));
+    L.push('');
+    L.push('🔄 Proposta nuova: ' + (state.regen || '—') + (val('regenTxt') ? ' — '+val('regenTxt') : ''));
+    const open = val('openText');
+    if(open){ L.push(''); L.push('💬 Altro: ' + open); }
+    return L.join('\n');
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', ()=>{
+    const url = 'https://wa.me/?text=' + encodeURIComponent(buildMessage());
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
