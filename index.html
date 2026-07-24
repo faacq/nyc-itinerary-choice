@@ -134,6 +134,9 @@
   .chip:hover{border-color:var(--accent2)}
   .chip.sel{background:var(--accent2); border-color:var(--accent2); color:#fff}
   .emoji-chip{font-size:1.15rem; padding:7px 14px}
+  .fb .sub{font-weight:600; font-size:.88rem; margin:13px 0 6px; color:#4a5a6a}
+  .who-input{width:100%; margin-top:8px; border:1.5px solid var(--line); border-radius:10px;
+    padding:9px 11px; font-family:inherit; font-size:.9rem; background:#fff; color:var(--ink)}
 
   /* Vote */
   .vote{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px}
@@ -427,6 +430,12 @@
       <div class="chip" data-val="No">No</div>
       <div class="chip" data-val="Non so">Non so</div>
     </div>
+    <div class="sub">Se sì, è <b>per tutti o solo per alcuni</b>?</div>
+    <div class="chips" data-group="tussaudsWho">
+      <div class="chip" data-val="tutti e 8">Tutti</div>
+      <div class="chip" data-val="solo alcuni">Solo alcuni</div>
+    </div>
+    <input type="text" class="who-input" id="tussaudsWhoTxt" placeholder="Se solo alcuni: chi / quanti? (es. le ragazze + 1 adulto)">
   </div>
 
   <div class="fb reveal" data-fb="yankees">
@@ -436,6 +445,12 @@
       <div class="chip" data-val="No">No</div>
       <div class="chip" data-val="Non so">Non so</div>
     </div>
+    <div class="sub">Se sì, è <b>per tutti o solo per alcuni</b>?</div>
+    <div class="chips" data-group="yankeesWho">
+      <div class="chip" data-val="tutti e 8">Tutti</div>
+      <div class="chip" data-val="solo alcuni">Solo alcuni</div>
+    </div>
+    <input type="text" class="who-input" id="yankeesWhoTxt" placeholder="Se solo alcuni: chi / quanti? (es. i ragazzi + i papà)">
   </div>
 
   <div class="fb reveal" data-fb="statua">
@@ -483,7 +498,7 @@
 
 <script>
   // ---- State ----
-  const state = { reactA:'', reactB:'', vote:'', fixed:'', edge:'', tussauds:'', yankees:'', statua:'', dieta:'' };
+  const state = { reactA:'', reactB:'', vote:'', fixed:'', edge:'', tussauds:'', tussaudsWho:'', yankees:'', yankeesWho:'', statua:'', dieta:'' };
 
   // ---- Single-select chip / vote groups ----
   document.querySelectorAll('[data-group]').forEach(group=>{
@@ -510,6 +525,15 @@
   }, {threshold:.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+  // ---- "per chi" suffix helper ----
+  function whoSuffix(whoVal, txtId){
+    const t = document.getElementById(txtId).value.trim();
+    const parts = [];
+    if(whoVal) parts.push(whoVal);
+    if(t) parts.push(t);
+    return parts.length ? ' — per chi: ' + parts.join(', ') : '';
+  }
+
   // ---- Build WhatsApp message ----
   function buildMessage(){
     const L = [];
@@ -527,8 +551,8 @@
     L.push('');
     L.push('Domande:');
     L.push('• The Edge: ' + (state.edge || '—'));
-    L.push('• Madame Tussauds: ' + (state.tussauds || '—'));
-    L.push('• Yankees: ' + (state.yankees || '—'));
+    L.push('• Madame Tussauds: ' + (state.tussauds || '—') + whoSuffix(state.tussaudsWho,'tussaudsWhoTxt'));
+    L.push('• Yankees: ' + (state.yankees || '—') + whoSuffix(state.yankeesWho,'yankeesWhoTxt'));
     L.push('• Statua della Libertà: ' + (state.statua || '—'));
     L.push('• Dieta Barbara/Carol: ' + (state.dieta || '—'));
     const free = document.getElementById('freeText').value.trim();
