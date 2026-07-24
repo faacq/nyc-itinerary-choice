@@ -205,6 +205,15 @@
     <p style="margin-top:12px"><b>☀️ Regola anti-caldo</b> (uguale ogni giorno): icone all'aperto la <b>mattina presto</b>, musei/negozi con <b>aria condizionata</b> a mezzogiorno, skyline e quartieri la <b>sera</b>. Soste gelato incluse 🍦</p>
   </div>
 
+  <div class="fb reveal" data-fb="fixed">
+    <div class="q">🔧 È cambiato qualcosa nella parte <b>già decisa o prenotata</b>? <small class="muted">(Summit, pass, MoMA, hotel)</small></div>
+    <div class="chips" data-group="fixed">
+      <div class="chip" data-val="Va tutto bene, confermo">✅ Tutto confermato</div>
+      <div class="chip" data-val="C'è qualcosa da cambiare">✏️ Qualcosa è cambiato</div>
+    </div>
+    <textarea id="fixedNote" style="margin-top:10px" placeholder="Se qualcosa è cambiato o va corretto (orario Summit, MoMA, hotel, numero di persone...), scrivilo qui"></textarea>
+  </div>
+
   <!-- ZONE MAP -->
   <h2>La città divisa in 5 zone</h2>
   <div class="card">
@@ -455,7 +464,7 @@
 
 <script>
   // ---- State ----
-  const state = { reactA:'', reactB:'', vote:'', edge:'', tussauds:'', yankees:'', statua:'', dieta:'' };
+  const state = { reactA:'', reactB:'', vote:'', fixed:'', edge:'', tussauds:'', yankees:'', statua:'', dieta:'' };
 
   // ---- Single-select chip / vote groups ----
   document.querySelectorAll('[data-group]').forEach(group=>{
@@ -492,6 +501,10 @@
     L.push('Reazioni:');
     L.push('• Opzione A: ' + (state.reactA || '—'));
     L.push('• Opzione B: ' + (state.reactB || '—'));
+    L.push('');
+    L.push('🔧 Parte già prenotata (Summit/pass/MoMA/hotel): ' + (state.fixed || '—'));
+    const fixedNote = document.getElementById('fixedNote').value.trim();
+    if(fixedNote){ L.push('   ↳ ' + fixedNote); }
     L.push('');
     L.push('Domande:');
     L.push('• The Edge: ' + (state.edge || '—'));
