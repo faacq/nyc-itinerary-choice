@@ -52,6 +52,10 @@
   }
   .how ol{margin:.4em 0 .1em; padding-left:1.2em}
   .how li{margin:.25em 0}
+  .note{background:#eef3fb; border:1px solid #cfe0f5; border-left:5px solid var(--accent);
+    border-radius:14px; padding:14px 16px; margin:16px 0; font-size:.95rem}
+  .note i{color:#4a5a6a}
+  .note.ok{background:#eef7f0; border-color:#cfe8d6; border-left-color:var(--g5)}
 
   /* Cards */
   .card{
@@ -190,6 +194,10 @@
       <li>Alla fine tocca <b>“Invia su WhatsApp”</b>: si crea un riassunto pronto da mandare.</li>
     </ol>
     <small>📩 Questa pagina è pensata <b>per te</b>, Fabrizio. Se vuoi <b>girarla agli altri</b>, faccelo sapere: la adattiamo per raccogliere il feedback di tutto il gruppo.</small>
+  </div>
+
+  <div class="note">
+    🦴 <b>Attenzione: questa è l'ossatura (lo “scheletro”).</b> Qui scegliamo solo <b>come muoverci</b> tra le zone, giorno per giorno. <b>Dopo</b>, sulla versione che preferite, ci innestiamo le <b>tappe personalizzate</b> uscite dal vostro questionario — <i>posti dove mangiare, spot instagrammabili, viste panoramiche, luoghi di film e serie, negozi…</i> — cucite sui gusti di ognuno. Per ora pensa solo a <b>quale dei due giri vi convince di più</b>. 😉
   </div>
 
   <!-- CONTEXT -->
@@ -382,6 +390,10 @@
     </div>
   </div>
 
+  <div class="note ok reveal">
+    ✅ <b>Rispetta il vostro piano originale.</b> Non abbiamo stravolto niente: ci sono (quasi) <b>tutte le tappe</b> che avevate elencato — Wall St / 9-11 / Oculus, Ponte di Brooklyn e Dumbo, Central Park in bici, High Line / Chelsea Market / Little Island, Summit, Chinatown e Little Italy, la Statua della Libertà, Bryant Park… Le abbiamo solo <b>raggruppate per zona</b> e messe in fila per <b>evitare il caldo</b>. L'unica vera differenza tra A e B è <b>Harlem / Bronx / Yankees</b>: l'opzione <b>B lo tiene</b> nel giro, l'opzione <b>A lo lascia opzionale</b>.
+  </div>
+
   <!-- VOTE -->
   <h2>🗳️ Il tuo voto</h2>
   <div class="card reveal" data-fb="vote">
@@ -451,6 +463,13 @@
     <textarea id="freeText" placeholder="Es. 'La domenica sera vorremmo il baseball', 'Aggiungete Katz's per il pastrami', 'Il martedì partiamo prima'..."></textarea>
   </div>
 
+  <!-- FREE FEEDBACK -->
+  <h2>💬 Vuoi aggiungere altro?</h2>
+  <div class="card reveal">
+    <p class="muted" style="margin-top:0">Spazio libero: dubbi, richieste, cose che non abbiamo considerato, idee, o qualsiasi feedback. Scrivi come ti viene.</p>
+    <textarea id="openText" placeholder="Scrivi qui liberamente..."></textarea>
+  </div>
+
   <div class="footnote">Fatto con ❤️ per il viaggio · il feedback arriva su WhatsApp</div>
 </div>
 
@@ -514,6 +533,8 @@
     L.push('• Dieta Barbara/Carol: ' + (state.dieta || '—'));
     const free = document.getElementById('freeText').value.trim();
     if(free){ L.push(''); L.push('✏️ Suggerimenti:'); L.push(free); }
+    const open = document.getElementById('openText').value.trim();
+    if(open){ L.push(''); L.push('💬 Altro:'); L.push(open); }
     return L.join('\n');
   }
 
