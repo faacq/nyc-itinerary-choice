@@ -79,7 +79,7 @@
   <div class="wrap">
     <div class="flag">🗽✅</div>
     <h1>Ci siamo, Fabrizio — manca il tuo OK</h1>
-    <div class="sub">Ho applicato le tue ultime modifiche. Dai un'ultima occhiata e, se ti torna, <b>approva</b>: poi mando il survey agli altri.</div>
+    <div class="sub">Ho applicato le tue ultime modifiche. Dai un'ultima occhiata e, se ti torna, <b>approva</b>: poi ti preparo il questionario per il resto del gruppo.</div>
   </div>
 </header>
 
@@ -96,8 +96,8 @@
 
   <!-- EMPIRE BOOKING ALERT -->
   <div class="alert">
-    <h3>⚠️ Da fare: prenotare l'Empire</h3>
-    <p style="margin:.3em 0">L'Empire di giorno (martedì mattina) va con uno <b>slot orario da prenotare nel pass Go City</b> — ad agosto la mattina presto è la fascia migliore (coda corta + luce piena). <b>Meglio farlo prima possibile.</b></p>
+    <h3>⚠️ Da fare: prenoti tu l'Empire</h3>
+    <p style="margin:.3em 0">L'Empire di giorno (martedì mattina) va con uno <b>slot orario da prenotare nel pass Go City</b> — ad agosto la mattina presto è la fascia migliore (coda corta + luce piena). <b>Lo prenoti tu</b>: quando l'hai fatto, <b>fammi sapere giorno e ora dello slot</b> così aggiorno l'itinerario di conseguenza.</p>
   </div>
 
   <!-- ITINERARY -->
@@ -128,6 +128,12 @@
     <div class="sk"><span class="lock">🔒</span> 🏙️ <mark>EMPIRE di giorno (mattina)</mark> · 🌀 Vessel + Hudson Yards · ultimi acquisti · repack → aeroporto</div>
     <div class="ex"><b>+</b> All'Antico Vinaio · Junior's</div></div>
 
+  <!-- BUS OPTIMISATION NOTE -->
+  <div class="next">
+    <h3>🚌 Un affinamento che farò</h3>
+    <p style="margin:0">Come avevi chiesto, <b>ottimizzo in dettaglio l'uso del Big Bus</b> (sabato + domenica): cucio le tappe sulle linee hop-on-hop-off per <b>ridurre gli spostamenti</b> e rendere <b>più fluida la visita</b>. Lo metto a punto nella guida.</p>
+  </div>
+
   <!-- OPTIONAL LAST TWEAKS -->
   <h2>✏️ Ancora qualcosa da ritoccare? (facoltativo)</h2>
   <div class="fb blue">
@@ -145,19 +151,15 @@
   <div class="fb">
     <div class="q">Approvi l'itinerario così com'è?</div>
     <div class="chips" data-group="ok">
-      <div class="chip big ok" data-val="APPROVO - manda il survey agli altri">✅ Approvo — manda il survey agli altri</div>
+      <div class="chip big ok" data-val="APPROVO - prepara il questionario per il gruppo">✅ Approvo — prepara il questionario per il gruppo</div>
       <div class="chip big" data-val="Aspetta - voglio ancora ritoccare">✋ Aspetta, voglio ritoccare</div>
-    </div>
-    <div class="chips" data-group="empire" style="margin-top:10px">
-      <div class="chip" data-val="prenoto io l'Empire">🎟️ L'Empire lo prenoto io</div>
-      <div class="chip" data-val="prenotalo/ricordamelo tu">🎟️ Pensaci tu / ricordamelo</div>
     </div>
   </div>
 
   <!-- NEXT -->
   <div class="next">
     <h3>➡️ Cosa succede dopo il tuo OK</h3>
-    <p style="margin:0">Appena approvi, mando il <b>survey al resto del gruppo</b> (MariaPaola, Tony, Barbara) per <b>raffinare</b> il giro con i loro ritocchi — poi preparo la <b>guida a persona</b> e il <b>budget</b>, e l'itinerario finale da portare in viaggio.</p>
+    <p style="margin:0">Appena approvi, ti <b>genero il questionario per il resto del gruppo</b> (MariaPaola, Tony, Barbara) così <b>lo giri a loro</b>: raccolgo i loro ritocchi per <b>raffinare</b> il giro. Poi preparo la <b>guida a persona</b> e il <b>budget</b>, e l'itinerario finale da portare in viaggio.</p>
   </div>
 
   <!-- FREE -->
@@ -178,7 +180,7 @@
 </div>
 
 <script>
-  const state = { tweak:'', ok:'', empire:'' };
+  const state = { tweak:'', ok:'' };
   document.querySelectorAll('[data-group]').forEach(group=>{
     const key = group.getAttribute('data-group');
     if(!(key in state)) return;
@@ -199,7 +201,6 @@
     L.push('[pagina: v5-fabrizio-ok]');
     L.push('');
     L.push('🟢 Approvazione: ' + (state.ok || '—'));
-    L.push('🎟️ Empire: ' + (state.empire || '—'));
     if(state.tweak || val('tweakTxt')) L.push('✏️ Ritocco finale: ' + (state.tweak||'') + (val('tweakTxt') ? ' — '+val('tweakTxt') : ''));
     const open = val('openText');
     if(open){ L.push(''); L.push('💬 Altro: ' + open); }
