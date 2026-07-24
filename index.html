@@ -40,6 +40,10 @@
 
   .alert{background:#fff5ec; border:2px solid var(--red); border-radius:14px; padding:14px 16px; margin:14px 0}
   .alert h3{margin-top:0; color:#b23a5b}
+  .heads{background:#fffaf0; border:1px solid #f0d9a8; border-left:5px solid var(--accent2); border-radius:12px; padding:14px 16px; margin:13px 0}
+  .heads .row{display:flex; gap:9px; align-items:flex-start; font-size:.9rem; padding:6px 0; border-bottom:1px dashed var(--line)}
+  .heads .row:last-child{border-bottom:none}
+  .heads .ic{font-size:1.15rem}
 
   .day{border:1px solid var(--line); border-radius:13px; padding:12px 13px; margin:11px 0; background:#fff}
   .day .dh{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px}
@@ -142,16 +146,23 @@
     <p style="margin:0">Come avevi chiesto, <b>ottimizzo in dettaglio l'uso del Big Bus</b> (sabato + domenica): cucio le tappe sulle linee hop-on-hop-off per <b>ridurre gli spostamenti</b> e rendere <b>più fluida la visita</b>. Lo metto a punto nella guida.</p>
   </div>
 
-  <!-- OPTIONAL LAST TWEAKS -->
-  <h2>✏️ Ancora qualcosa da ritoccare? (facoltativo)</h2>
+  <!-- HEADS-UP / AVVERTENZE before final OK -->
+  <h2>⚠️ Due avvertenze prima di confermare</h2>
+  <div class="heads">
+    <div class="row"><span class="ic">🥵</span><div><b>Ponte di giorno = più caldo e affollato.</b> L'alba serviva proprio a evitarli. Ci andiamo <b>appena parte il bus (~9:00)</b> per limitare il problema. E la <b>foto all'alba che voleva Cocò</b> la possiamo recuperare a un <b>tramonto</b> un'altra sera, se ti va.</div></div>
+    <div class="row"><span class="ic">💰</span><div><b>Meno metro = più taxi/Uber.</b> Siamo in <b>8</b>: ogni tratta in auto sono <b>2 macchine</b> (UberXL ~6 posti). Comodo, ma il <b>costo sale</b> — lo metto nero su bianco nel <b>budget</b>, così decidi con i numeri davanti.</div></div>
+  </div>
+
+  <!-- OPTIONAL LAST TWEAKS: space to insert modifications -->
+  <h2>✏️ Vuoi ancora inserire modifiche?</h2>
   <div class="fb blue">
-    <div class="q">Se c'è un ultimo ritocco, dimmelo. Altrimenti salta e approva.</div>
+    <div class="q">C'è sempre spazio: se vuoi <b>aggiungere o cambiare</b> qualcosa (scheletro o luoghi), scrivilo qui. Altrimenti approva pure.</div>
     <div class="chips" data-group="tweak">
       <div class="chip" data-val="scheletro (giorni/zone/ritmo)">Scheletro</div>
       <div class="chip" data-val="luoghi/tappe (cibo, extra)">Luoghi/tappe</div>
       <div class="chip" data-val="niente, va bene">Niente, va bene</div>
     </div>
-    <input class="txtin" id="tweakTxt" placeholder="Ultimo ritocco (se serve)...">
+    <input class="txtin" id="tweakTxt" placeholder="Scrivi qui la modifica che vuoi inserire...">
   </div>
 
   <!-- OK -->
