@@ -152,7 +152,7 @@
 
   <!-- ITINERARY, day by day, with removable extras -->
   <h2>📅 L'itinerario, giorno per giorno</h2>
-  <p class="muted" style="margin-top:0">🔒 = scheletro (fisso). Le <b>tappe extra</b>: <b>toccale per toglierle</b> (diventano barrate). Poi sotto mi dici il perché.</p>
+  <p class="muted" style="margin-top:0">🔒 = scheletro (fisso). Le <b>tappe extra</b> le puoi <b>togliere o sostituire con un click</b>: toccale per toglierle (diventano barrate), poi qui sotto aggiungi <b>cosa mettere al posto</b> o cosa vuoi in più. <b>Ti rigenero un nuovo itinerario.</b></p>
 
   <div class="day"><div class="dh"><span class="dd">Gio 13</span><span class="zb b3">Midtown</span><span class="muted">arrivo</span></div>
     <div class="sk"><span class="lock">🔒 scheletro:</span> Times Square di notte + cena</div>
@@ -185,9 +185,10 @@
     <div class="extras"><span class="rm">🥖 All'Antico Vinaio</span><span class="rm">🍰 Junior's</span></div></div>
 
   <div class="card">
-    <div class="q" style="font-weight:700">🗑️ Perché togli quelle tappe?</div>
-    <p class="muted" style="margin:2px 0 0">Le tappe barrate le levo. Dimmi il motivo (troppa roba, non interessa, poco tempo...) così rigenero meglio.</p>
-    <input class="txtin" id="rmWhy" placeholder="Motivo delle rimozioni...">
+    <div class="q" style="font-weight:700">✏️ Togli e/o sostituisci</div>
+    <p class="muted" style="margin:2px 0 0">Le tappe barrate le levo. Dimmi <b>perché</b> (troppa roba, non interessa, poco tempo...) e, se vuoi, <b>cosa metto al posto</b> o cosa aggiungo. Con questo <b>rigenero un nuovo itinerario</b>.</p>
+    <input class="txtin" id="rmWhy" placeholder="Perché le togli? (motivo)">
+    <input class="txtin" id="addWhat" placeholder="Cosa metto al posto / cosa aggiungo?">
   </div>
 
   <!-- SKELETON CHANGE -->
@@ -305,9 +306,10 @@
     L.push('🗽 NEW YORK — Revisione itinerario v2 (Fabrizio)');
     L.push('[pagina: v4-review]');
     L.push('');
-    if(removed.size){
-      L.push('🗑️ Tappe da togliere: ' + [...removed].join(', '));
+    if(removed.size || val('rmWhy') || val('addWhat')){
+      if(removed.size) L.push('🗑️ Tappe da togliere: ' + [...removed].join(', '));
       if(val('rmWhy')) L.push('   Motivo: ' + val('rmWhy'));
+      if(val('addWhat')) L.push('➕ Da mettere al posto / aggiungere: ' + val('addWhat'));
       L.push('');
     }
     L.push('🧱 Scheletro: ' + (state.skmod || '—') + (val('skTxt') ? ' — '+val('skTxt') : ''));
