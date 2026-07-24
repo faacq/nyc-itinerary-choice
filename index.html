@@ -147,9 +147,18 @@
   </div>
 
   <!-- HEADS-UP / AVVERTENZA before final OK -->
-  <h2>⚠️ Un'avvertenza prima di confermare</h2>
+  <h2>⚠️ Un'avvertenza (da confermare)</h2>
   <div class="heads">
     <div class="row"><span class="ic">🥵</span><div><b>Ponte di giorno = più caldo e affollato.</b> L'alba serviva proprio a evitarli. Ci andiamo <b>appena parte il bus (~9:00)</b> per limitare il problema. E la <b>foto all'alba che voleva Cocò</b> la possiamo recuperare a un <b>tramonto</b> un'altra sera, se ti va.</div></div>
+    <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--line)">
+      <div style="font-weight:700; margin-bottom:7px">👉 Come vuoi gestirla?</div>
+      <div class="chips" data-group="bridge">
+        <div class="chip" data-val="va bene il ponte di giorno">👍 Va bene di giorno</div>
+        <div class="chip" data-val="recuperiamo la foto di Coco al tramonto">🌅 Foto di Cocò al tramonto</div>
+        <div class="chip" data-val="rivediamo questa parte">🔄 Rivediamola</div>
+      </div>
+      <input class="txtin" id="bridgeTxt" placeholder="Oppure scrivi come preferisci gestirla...">
+    </div>
   </div>
 
   <!-- OPTIONAL LAST TWEAKS: space to insert modifications -->
@@ -198,7 +207,7 @@
 </div>
 
 <script>
-  const state = { tweak:'', ok:'' };
+  const state = { tweak:'', ok:'', bridge:'' };
   document.querySelectorAll('[data-group]').forEach(group=>{
     const key = group.getAttribute('data-group');
     if(!(key in state)) return;
@@ -219,6 +228,7 @@
     L.push('[pagina: v5-fabrizio-ok]');
     L.push('');
     L.push('🟢 Approvazione: ' + (state.ok || '—'));
+    L.push('⚠️ Ponte (avvertenza): ' + (state.bridge || '—') + (val('bridgeTxt') ? ' — '+val('bridgeTxt') : ''));
     if(state.tweak || val('tweakTxt')) L.push('✏️ Ritocco finale: ' + (state.tweak||'') + (val('tweakTxt') ? ' — '+val('tweakTxt') : ''));
     const open = val('openText');
     if(open){ L.push(''); L.push('💬 Altro: ' + open); }
