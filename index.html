@@ -79,7 +79,7 @@
   <div class="wrap">
     <div class="flag">🗽✅</div>
     <h1>Ci siamo, Fabrizio — manca il tuo OK</h1>
-    <div class="sub">Ho applicato le tue ultime modifiche. Dai un'ultima occhiata e, se ti torna, <b>approva</b>: poi ti preparo il questionario per il resto del gruppo.</div>
+    <div class="sub">Ho <b>sistemato i tuoi ultimi ritocchi</b> e risposto alle tue domande. Manca solo la <b>conferma finale</b>: se ti torna, approva e preparo il questionario per il resto del gruppo.</div>
   </div>
 </header>
 
@@ -128,12 +128,21 @@
     <div class="sk"><span class="lock">🔒</span> 🏙️ <mark>EMPIRE di giorno (mattina)</mark> · 🌀 Vessel + Hudson Yards · ultimi acquisti · repack → aeroporto</div>
     <div class="ex"><b>+</b> All'Antico Vinaio · Junior's</div></div>
 
-  <!-- ANSWERS TO FABRIZIO'S QUESTIONS -->
+  <!-- ROUND 2: latest inputs processed + open question -->
+  <h2>🔁 I tuoi ultimi ritocchi, sistemati</h2>
   <div class="card">
-    <h3>🙋 Le risposte alle tue domande</h3>
-    <p style="margin:.3em 0"><b>🎤 Stardust:</b> aggiunto — <b>Ellen's Stardust Diner</b> (Times Sq, vicino hotel, camerieri che cantano Broadway): bello come cena di benvenuto giovedì o come pausa un altro giorno.</p>
-    <p style="margin:.3em 0"><b>🌉 Ponte di Brooklyn all'alba:</b> ci si arriva in <b>metro</b> (sunrise ad agosto ~6:10). Da Times Sq: <b>F → York St</b> o <b>A/C → High St</b> per le foto a Dumbo; <b>4/5/6 → Brooklyn Bridge-City Hall</b> per attraversare il ponte da Manhattan.</p>
-    <p style="margin:.3em 0"><b>🚌 Big Bus, orari:</b> linea Downtown ~<b>9:00-17:00</b>, Uptown ~<b>10:00-16:00</b>. Quindi <b>non copre l'alba</b>: la mattina prestissimo si va in metro, poi dalle ~9:00 si usa il bus per le tratte lunghe.</p>
+    <p style="margin:.3em 0"><b>🎤 Stardust:</b> aggiunto — <b>Ellen's Stardust Diner</b> (Times Sq, vicino hotel).</p>
+    <p style="margin:.3em 0"><b>🌉 Ponte di Brooklyn all'alba:</b> ci si arriva in <b>metro</b> (sunrise ad agosto ~6:10, il Big Bus non c'è ancora). Da Times Sq: <b>F → York St</b> o <b>A/C → High St</b> per le foto a Dumbo; <b>4/5/6 → Brooklyn Bridge-City Hall</b> per attraversare il ponte.</p>
+    <p style="margin:.3em 0"><b>🚌 Big Bus, orari:</b> Downtown ~<b>9:00-17:00</b>, Uptown ~<b>10:00-16:00</b>. Quindi: alba in metro, poi <b>dalle ~9:00 si usa il bus</b> per le tratte lunghe.</p>
+  </div>
+
+  <!-- OPEN QUESTION: Stardust nature -->
+  <div class="fb">
+    <div class="q">🤔 Un dubbio sullo Stardust: <b>Ellen's Stardust è una cena-spettacolo</b> (camerieri che cantano Broadway, ~45-90 min), <b>non un caffè veloce</b>. Come lo vuoi?</div>
+    <div class="chips" data-group="stardust">
+      <div class="chip" data-val="tienilo come cena/esperienza">🎤 Tienilo come cena/esperienza</div>
+      <div class="chip" data-val="preferisco un vero caffè/pausa veloce">☕ Meglio un vero caffè/pausa</div>
+    </div>
   </div>
 
   <!-- BUS OPTIMISATION NOTE -->
@@ -155,9 +164,9 @@
   </div>
 
   <!-- OK -->
-  <h2>🟢 Il tuo OK</h2>
+  <h2>🟢 Approvazione finale</h2>
   <div class="fb">
-    <div class="q">Approvi l'itinerario così com'è?</div>
+    <div class="q">Con questi ultimi ritocchi, <b>approvi l'itinerario</b>?</div>
     <div class="chips" data-group="ok">
       <div class="chip big ok" data-val="APPROVO - prepara il questionario per il gruppo">✅ Approvo — prepara il questionario per il gruppo</div>
       <div class="chip big" data-val="Aspetta - voglio ancora ritoccare">✋ Aspetta, voglio ritoccare</div>
@@ -188,7 +197,7 @@
 </div>
 
 <script>
-  const state = { tweak:'', ok:'' };
+  const state = { tweak:'', ok:'', stardust:'' };
   document.querySelectorAll('[data-group]').forEach(group=>{
     const key = group.getAttribute('data-group');
     if(!(key in state)) return;
@@ -209,6 +218,7 @@
     L.push('[pagina: v5-fabrizio-ok]');
     L.push('');
     L.push('🟢 Approvazione: ' + (state.ok || '—'));
+    L.push('🎤 Stardust: ' + (state.stardust || '—'));
     if(state.tweak || val('tweakTxt')) L.push('✏️ Ritocco finale: ' + (state.tweak||'') + (val('tweakTxt') ? ' — '+val('tweakTxt') : ''));
     const open = val('openText');
     if(open){ L.push(''); L.push('💬 Altro: ' + open); }
